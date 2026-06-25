@@ -3,7 +3,7 @@ description: >-
   Design-tool-style radial gradients for Flutter. Define each stop as
   position + color + opacity (like Figma), with optional Gaussian and
   frosted-glass backdrop blur.
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/keepYaoung/easy-radial-gradient
 issue_tracker: https://github.com/keepYaoung/easy-radial-gradient/issues
 
@@ -13,6 +13,12 @@ topics:
   - blur
   - ui
   - design
+
+screenshots:
+  - description: "easy_radial_gradient logo — a multi-stop radial gradient orb with a soft glow."
+    path: doc/images/logo.png
+  - description: "From left: a one-line glow, a 6-stop multi-color gradient, a Gaussian-blurred glow, and a frosted-glass card using backdrop blur."
+    path: doc/images/showcase.png
 
 environment:
   sdk: ^3.11.4

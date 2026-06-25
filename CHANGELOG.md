@@ -1,3 +1,8 @@
+## 1.0.1
+
+* Add a package logo and a showcase image as pub.dev `screenshots` — the logo
+  now appears as the package thumbnail. No code changes.
+
 ## 1.0.0
 
 First stable release. No API changes from `0.0.1` — the public API
