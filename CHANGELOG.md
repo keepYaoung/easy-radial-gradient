@@ -1,3 +1,8 @@
+## 1.0.2
+
+* Replace the package thumbnail with a "liquid glass" frosted-glass logo
+  (a backdrop-blurred card floating over vivid blobs). No code changes.
+
 ## 1.0.1
 
 * Add a package logo and a showcase image as pub.dev `screenshots` — the logo
