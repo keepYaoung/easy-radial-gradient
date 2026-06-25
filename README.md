@@ -28,8 +28,12 @@ Flutter's built-in `RadialGradient` makes you pass **two parallel lists** —
 ```dart
 // vanilla Flutter 😖
 RadialGradient(
-  colors: [Colors.orange, Colors.orange.withValues(alpha: 0)],
-  stops: [0.0, 1.0],
+  colors: [
+    Colors.orange,
+    Colors.deepOrange,
+    Colors.deepOrange.withValues(alpha: 0),
+  ],
+  stops: [0.0, 0.5, 1.0],
 )
 ```
 
@@ -41,8 +45,9 @@ This package does the same:
 // easy_radial_gradient 🙂
 EasyRadialGradient(
   colorStops: const [
-    RadialStop.start(color: Colors.orange),               // position 0.0
-    RadialStop.end(color: Colors.orange, opacity: 0.0),   // position 1.0
+    RadialStop.start(color: Colors.orange),                   // position 0.0
+    RadialStop.at(0.5, color: Colors.deepOrange),             // position 0.5
+    RadialStop.end(color: Colors.deepOrange, opacity: 0.0),   // position 1.0
   ],
 )
 ```
