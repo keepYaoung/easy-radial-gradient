@@ -181,4 +181,11 @@ stacks exactly like opacity does in a design tool.
 
 ## License
 
-See [LICENSE](LICENSE).
+[MIT](LICENSE) © 2026 keepYaoung &lt;vbdd556@gmail.com&gt;
+
+## Author
+
+Made by **keepYaoung** — vbdd556@gmail.com
+
+Issues and PRs welcome at
+<https://github.com/keepYaoung/easy-radial-gradient>.
