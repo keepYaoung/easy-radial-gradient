@@ -1,3 +1,9 @@
+## 1.0.0
+
+First stable release. No API changes from `0.0.1` — the public API
+(`RadialStop`, `EasyRadialGradient`, `RadialGradientBox`) is now considered
+stable, with bilingual (English/Korean) dartdoc and a 160/160 pana score.
+
 ## 0.0.1
 
 Initial release.
