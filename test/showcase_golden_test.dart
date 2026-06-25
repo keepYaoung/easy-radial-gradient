@@ -94,7 +94,10 @@ class _Showcase extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(28)),
                       backdropBlur: 18,
                       colorStops: [
-                        RadialStop.start(color: Color(0xFFFFFFFF), opacity: 0.35),
+                        RadialStop.start(
+                          color: Color(0xFFFFFFFF),
+                          opacity: 0.35,
+                        ),
                         RadialStop.end(color: Color(0xFFFFFFFF), opacity: 0.08),
                       ],
                     ),
@@ -109,11 +112,11 @@ class _Showcase extends StatelessWidget {
   }
 
   static Widget _blob(int color) => Container(
-        width: 120,
-        height: 120,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: EasyRadialGradient.glow(Color(color)),
-        ),
-      );
+    width: 120,
+    height: 120,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      gradient: EasyRadialGradient.glow(Color(color)),
+    ),
+  );
 }

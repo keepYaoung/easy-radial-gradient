@@ -5,7 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('RadialStop', () {
     test('effectiveColor multiplies color alpha by opacity', () {
-      const stop = RadialStop(position: 0, color: Color(0xFF000000), opacity: 0.5);
+      const stop = RadialStop(
+        position: 0,
+        color: Color(0xFF000000),
+        opacity: 0.5,
+      );
       expect(stop.effectiveColor.a, closeTo(0.5, 1e-6));
     });
 
@@ -28,7 +32,10 @@ void main() {
     });
 
     test('transparent constructor yields zero opacity', () {
-      const stop = RadialStop.transparent(position: 1, color: Color(0xFFFF0000));
+      const stop = RadialStop.transparent(
+        position: 1,
+        color: Color(0xFFFF0000),
+      );
       expect(stop.opacity, 0.0);
       expect(stop.effectiveColor.a, 0.0);
     });
@@ -39,17 +46,18 @@ void main() {
         throwsA(isA<AssertionError>()),
       );
       expect(
-        () => RadialStop(
-          position: 0,
-          color: const Color(0xFF000000),
-          opacity: 2,
-        ),
+        () =>
+            RadialStop(position: 0, color: const Color(0xFF000000), opacity: 2),
         throwsA(isA<AssertionError>()),
       );
     });
 
     test('equality and copyWith', () {
-      const a = RadialStop(position: 0.2, color: Color(0xFF010203), opacity: 0.4);
+      const a = RadialStop(
+        position: 0.2,
+        color: Color(0xFF010203),
+        opacity: 0.4,
+      );
       expect(a.copyWith(opacity: 0.4), a);
       expect(a.copyWith(position: 0.3), isNot(a));
     });
@@ -83,10 +91,7 @@ void main() {
     test('is a RadialGradient usable in BoxDecoration', () {
       final g = EasyRadialGradient.glow(const Color(0xFF00FFFF));
       expect(g, isA<RadialGradient>());
-      expect(
-        g.createShader(const Rect.fromLTWH(0, 0, 100, 100)),
-        isNotNull,
-      );
+      expect(g.createShader(const Rect.fromLTWH(0, 0, 100, 100)), isNotNull);
     });
 
     test('asserts at least two stops', () {
