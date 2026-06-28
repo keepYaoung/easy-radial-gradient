@@ -6,6 +6,8 @@
   so the backdrop blur is visible.
 * Add `AGENTS.md` (guidance for AI coding agents) and `CONTRIBUTING.md`
   (contributor guide), plus a short "Support" section in the README.
+* Add web support to the example and a live, in-browser demo of the playground
+  (linked at the top of the README), with badges.
 
 No changes to the public library API.
 

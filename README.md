@@ -2,10 +2,19 @@
 
 Design-tool-style radial gradients for Flutter.
 
-![easy_radial_gradient showcase](doc/images/showcase.png)
+[![pub package](https://img.shields.io/pub/v/easy_radial_gradient.svg)](https://pub.dev/packages/easy_radial_gradient)
+[![Live demo](https://img.shields.io/badge/%E2%96%B6-Live%20demo-FF4D8D)](https://keepyaoung.github.io/easy-radial-gradient/)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+**[▶ Try the interactive playground](https://keepyaoung.github.io/easy-radial-gradient/)** —
+tweak `blur`, `backdropBlur`, `radius`, shape, and color presets live in your
+browser.
+
+[![easy_radial_gradient showcase](doc/images/showcase.png)](https://keepyaoung.github.io/easy-radial-gradient/)
 
 *From left: a one-line glow, a 6-stop multi-color gradient, a Gaussian-blurred
-glow, and a frosted-glass card using backdrop blur.*
+glow, and a frosted-glass card using backdrop blur. (Click the image to open the
+live demo.)*
 
 ## Why this exists
 
