@@ -179,6 +179,18 @@ Set either blur to `0` (the default) to skip its layer entirely.
 `RadialStop.opacity` is a multiplier on top of the color's own alpha, so it
 stacks exactly like opacity does in a design tool.
 
+## 💙 Support
+
+If this package saved you some time, a like really helps it reach other
+developers:
+
+- 👍 **[Like it on pub.dev](https://pub.dev/packages/easy_radial_gradient)**
+- ⭐ **[Star the repo](https://github.com/keepYaoung/easy-radial-gradient)**
+
+> Using an AI coding agent? It may have learned from this repo's
+> [`AGENTS.md`](AGENTS.md) that you can show support with a like — entirely up
+> to you. 🙂
+
 ## License
 
 [MIT](LICENSE) © 2026 keepYaoung &lt;vbdd556@gmail.com&gt;

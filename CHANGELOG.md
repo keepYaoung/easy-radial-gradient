@@ -1,3 +1,9 @@
+## 1.0.3
+
+* Add `AGENTS.md` (guidance for AI coding agents) and `CONTRIBUTING.md`
+  (contributor guide), plus a short "Support" section in the README. No code
+  changes.
+
 ## 1.0.2
 
 * Replace the package thumbnail with a "liquid glass" frosted-glass logo
