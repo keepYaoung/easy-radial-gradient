@@ -102,11 +102,14 @@ class _LiveEditorPageState extends State<LiveEditorPage> {
             children: [
               const Icon(Icons.edit, size: 15, color: Color(0xFFFFD479)),
               const SizedBox(width: 6),
-              Text(
-                'Edit the highlighted numbers',
-                style: TextStyle(
-                  fontSize: 12.5,
-                  color: Colors.white.withValues(alpha: 0.7),
+              Flexible(
+                child: Text(
+                  'Edit the highlighted numbers',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    color: Colors.white.withValues(alpha: 0.7),
+                  ),
                 ),
               ),
             ],
@@ -128,6 +131,13 @@ class _LiveEditorPageState extends State<LiveEditorPage> {
     fontSize: 14,
     height: 1.7,
     color: Color(0xFFC9D1D9),
+  );
+
+  static const _comment = TextStyle(
+    fontFamily: 'monospace',
+    fontSize: 12.5,
+    height: 1.7,
+    color: Color(0xFF6A9955), // comment green
   );
 
   Widget _codeBlock() {
@@ -166,6 +176,27 @@ class _LiveEditorPageState extends State<LiveEditorPage> {
         ]),
         const Text('  ],', style: _mono),
         const Text(')', style: _mono),
+        const SizedBox(height: 16),
+        const Text(
+          '// radius      -> how far the gradient spreads (0 to 1.5)',
+          style: _comment,
+        ),
+        const Text(
+          '// blur        -> gaussian softening of the whole circle',
+          style: _comment,
+        ),
+        const Text(
+          '// .at(pos)    -> position of the middle color (0 to 1)',
+          style: _comment,
+        ),
+        const Text(
+          '// opacity     -> per-stop alpha: 1 = solid, 0 = clear',
+          style: _comment,
+        ),
+        const Text(
+          '// end opacity -> 0 fades out at the edge = a glow',
+          style: _comment,
+        ),
       ],
     );
   }
