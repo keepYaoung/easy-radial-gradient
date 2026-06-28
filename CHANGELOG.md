@@ -1,12 +1,19 @@
-## 1.0.3
+## 1.0.4
 
+* Add a live, in-browser demo (GitHub Pages) linked from the top of the README,
+  with badges.
 * Rewrite the example into a live code editor: a `RadialGradientBox` snippet
   whose numeric literals (radius, blur, stop position, opacities) are editable
-  inline, updating a single radial-gradient circle in real time.
+  inline, updating a single radial-gradient circle in real time, with a
+  comment-style explanation under the code.
+
+No changes to the public library API.
+
+## 1.0.3
+
 * Add `AGENTS.md` (guidance for AI coding agents) and `CONTRIBUTING.md`
   (contributor guide), plus a short "Support" section in the README.
-* Add web support to the example and a live, in-browser demo of the playground
-  (linked at the top of the README), with badges.
+* Add web support and an interactive example.
 
 No changes to the public library API.
 
