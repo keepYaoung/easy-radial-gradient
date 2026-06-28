@@ -14,66 +14,46 @@ class ExampleApp extends StatelessWidget {
       theme: ThemeData.dark(
         useMaterial3: true,
       ).copyWith(scaffoldBackgroundColor: const Color(0xFF0E0B1A)),
-      home: const PlaygroundPage(),
+      home: const LiveEditorPage(),
     );
   }
 }
 
-/// A color preset: a label and its list of [RadialStop]s.
-class _Preset {
-  const _Preset(this.label, this.stops);
-  final String label;
-  final List<RadialStop> stops;
-}
-
-const _presets = <_Preset>[
-  _Preset('Sunset', [
-    RadialStop.start(color: Color(0xFFFFF1C2)),
-    RadialStop.at(0.35, color: Color(0xFFFFC857)),
-    RadialStop.at(0.7, color: Color(0xFFFF4D8D)),
-    RadialStop.end(color: Color(0xFFFF4D8D), opacity: 0.0),
-  ]),
-  _Preset('Ocean', [
-    RadialStop.start(color: Color(0xFF8AF0FF)),
-    RadialStop.at(0.5, color: Color(0xFF4DD0FF)),
-    RadialStop.at(0.8, color: Color(0xFF7C4DFF)),
-    RadialStop.end(color: Color(0xFF7C4DFF), opacity: 0.0),
-  ]),
-  _Preset('Frost (glass)', [
-    RadialStop.start(color: Color(0xFFFFFFFF), opacity: 0.34),
-    RadialStop.at(0.65, color: Color(0xFFFFFFFF), opacity: 0.12),
-    RadialStop.end(color: Color(0xFFFFFFFF), opacity: 0.04),
-  ]),
-];
-
-class PlaygroundPage extends StatefulWidget {
-  const PlaygroundPage({super.key});
+/// A tiny "edit the numbers in the code" demo: a single radial-gradient circle
+/// whose source is shown as an editable snippet. Only the numeric literals are
+/// editable (highlighted in amber); everything updates live.
+class LiveEditorPage extends StatefulWidget {
+  const LiveEditorPage({super.key});
 
   @override
-  State<PlaygroundPage> createState() => _PlaygroundPageState();
+  State<LiveEditorPage> createState() => _LiveEditorPageState();
 }
 
-class _PlaygroundPageState extends State<PlaygroundPage> {
-  double _blur = 0;
-  double _backdropBlur = 14;
+class _LiveEditorPageState extends State<LiveEditorPage> {
   double _radius = 0.5;
-  double _corner = 36;
-  bool _isCircle = false;
-  int _presetIndex = 2; // Frost — shows backdrop blur nicely.
+  double _blur = 0;
+  double _midPos = 0.55;
+  double _midOpacity = 1.0;
+  double _endOpacity = 0.0;
+
+  static const _c0 = Color(0xFFFFC857); // start  (gold)
+  static const _c1 = Color(0xFFFF4D8D); // middle (pink)
+  static const _c2 = Color(0xFF7C4DFF); // end    (violet)
 
   @override
   Widget build(BuildContext context) {
-    final preset = _presets[_presetIndex];
-
-    final box = RadialGradientBox(
-      width: 240,
-      height: _isCircle ? 240 : 200,
-      radius: _radius,
-      blur: _blur,
-      backdropBlur: _backdropBlur,
-      shape: _isCircle ? BoxShape.circle : BoxShape.rectangle,
-      borderRadius: _isCircle ? null : BorderRadius.circular(_corner),
-      colorStops: preset.stops,
+    final preview = Center(
+      child: RadialGradientBox(
+        width: 260,
+        height: 260,
+        radius: _radius,
+        blur: _blur,
+        colorStops: [
+          RadialStop.start(color: _c0),
+          RadialStop.at(_midPos, color: _c1, opacity: _midOpacity),
+          RadialStop.end(color: _c2, opacity: _endOpacity),
+        ],
+      ),
     );
 
     return Scaffold(
@@ -82,146 +62,235 @@ class _PlaygroundPageState extends State<PlaygroundPage> {
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // Live preview, with colorful blobs behind so backdrop blur shows.
-            Expanded(
-              child: Stack(
-                alignment: Alignment.center,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final wide = constraints.maxWidth > 760;
+            if (wide) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Positioned(
-                    left: 36,
-                    top: 24,
-                    child: _Blob(0xFFFF2D7E, 200),
-                  ),
-                  const Positioned(
-                    right: 28,
-                    bottom: 18,
-                    child: _Blob(0xFF22C3FF, 220),
-                  ),
-                  const Positioned(
-                    right: 70,
-                    top: 30,
-                    child: _Blob(0xFFFFB020, 150),
-                  ),
-                  box,
+                  Expanded(child: preview),
+                  SizedBox(width: 420, child: _editorPanel()),
                 ],
-              ),
-            ),
-
-            // Controls.
-            Container(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-              decoration: const BoxDecoration(
-                color: Color(0xFF161427),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Wrap(
-                    spacing: 8,
-                    children: [
-                      for (var i = 0; i < _presets.length; i++)
-                        ChoiceChip(
-                          label: Text(_presets[i].label),
-                          selected: _presetIndex == i,
-                          onSelected: (_) => setState(() => _presetIndex = i),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Text('Shape'),
-                      const SizedBox(width: 12),
-                      SegmentedButton<bool>(
-                        segments: const [
-                          ButtonSegment(value: true, label: Text('Circle')),
-                          ButtonSegment(value: false, label: Text('Rounded')),
-                        ],
-                        selected: {_isCircle},
-                        onSelectionChanged: (s) =>
-                            setState(() => _isCircle = s.first),
-                      ),
-                    ],
-                  ),
-                  _slider('blur', _blur, 0, 40, (v) => _blur = v),
-                  _slider(
-                    'backdropBlur',
-                    _backdropBlur,
-                    0,
-                    40,
-                    (v) => _backdropBlur = v,
-                  ),
-                  _slider('radius', _radius, 0.1, 1.0, (v) => _radius = v),
-                  if (!_isCircle)
-                    _slider('corner', _corner, 0, 100, (v) => _corner = v),
-                ],
-              ),
-            ),
-          ],
+              );
+            }
+            return Column(
+              children: [
+                Expanded(child: preview),
+                _editorPanel(),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _slider(
-    String label,
-    double value,
-    double min,
-    double max,
-    ValueChanged<double> onChanged,
-  ) {
-    return Row(
+  Widget _editorPanel() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+      decoration: const BoxDecoration(
+        color: Color(0xFF161427),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.edit, size: 15, color: Color(0xFFFFD479)),
+              const SizedBox(width: 6),
+              Text(
+                'Edit the highlighted numbers',
+                style: TextStyle(
+                  fontSize: 12.5,
+                  color: Colors.white.withValues(alpha: 0.7),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: _codeBlock(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // --- editable code snippet ---------------------------------------------
+
+  static const _mono = TextStyle(
+    fontFamily: 'monospace',
+    fontSize: 14,
+    height: 1.7,
+    color: Color(0xFFC9D1D9),
+  );
+
+  Widget _codeBlock() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 104,
-          child: Text(label, style: const TextStyle(fontSize: 13)),
-        ),
-        Expanded(
-          child: Slider(
-            value: value,
-            min: min,
-            max: max,
-            onChanged: (v) => setState(() => onChanged(v)),
+        const Text('RadialGradientBox(', style: _mono),
+        const Text('  shape: BoxShape.circle,', style: _mono),
+        _line([
+          const Text('  radius: ', style: _mono),
+          _num(_radius, 0, 1.5, 2, (v) => _radius = v),
+          const Text(',', style: _mono),
+        ]),
+        _line([
+          const Text('  blur: ', style: _mono),
+          _num(_blur, 0, 40, 0, (v) => _blur = v),
+          const Text(',', style: _mono),
+        ]),
+        const Text('  colorStops: [', style: _mono),
+        _codeColorLine('    RadialStop.start(color: ', _c0, '),'),
+        _line([
+          const Text('    RadialStop.at(', style: _mono),
+          _num(_midPos, 0, 1, 2, (v) => _midPos = v),
+          const Text(', color: ', style: _mono),
+          _swatch(_c1),
+          const Text(', opacity: ', style: _mono),
+          _num(_midOpacity, 0, 1, 2, (v) => _midOpacity = v),
+          const Text('),', style: _mono),
+        ]),
+        _line([
+          const Text('    RadialStop.end(color: ', style: _mono),
+          _swatch(_c2),
+          const Text(', opacity: ', style: _mono),
+          _num(_endOpacity, 0, 1, 2, (v) => _endOpacity = v),
+          const Text('),', style: _mono),
+        ]),
+        const Text('  ],', style: _mono),
+        const Text(')', style: _mono),
+      ],
+    );
+  }
+
+  Widget _codeColorLine(String prefix, Color color, String suffix) {
+    return _line([
+      Text(prefix, style: _mono),
+      _swatch(color),
+      Text(suffix, style: _mono),
+    ]);
+  }
+
+  Widget _line(List<Widget> children) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: children,
+    );
+  }
+
+  /// A non-editable color literal with a small swatch, e.g. `Color(0xFFFF4D8D)`.
+  Widget _swatch(Color color) {
+    final hex = color
+        .toARGB32()
+        .toRadixString(16)
+        .toUpperCase()
+        .padLeft(8, '0');
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 11,
+          height: 11,
+          margin: const EdgeInsets.only(right: 4),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(2),
           ),
         ),
-        SizedBox(
-          width: 44,
-          child: Text(
-            value.toStringAsFixed(max <= 1 ? 2 : 0),
-            textAlign: TextAlign.end,
-            style: const TextStyle(
-              fontFeatures: [FontFeature.tabularFigures()],
-            ),
-          ),
+        Text(
+          'Color(0x$hex)',
+          style: _mono.copyWith(color: const Color(0xFF79C0FF)),
         ),
       ],
     );
   }
+
+  Widget _num(
+    double value,
+    double min,
+    double max,
+    int decimals,
+    ValueChanged<double> onChanged,
+  ) {
+    return _NumberField(
+      value: value,
+      min: min,
+      max: max,
+      decimals: decimals,
+      onChanged: (v) => setState(() => onChanged(v)),
+    );
+  }
 }
 
-class _Blob extends StatelessWidget {
-  const _Blob(this.color, this.size);
+/// An inline, editable numeric literal rendered in amber to signal "editable".
+class _NumberField extends StatefulWidget {
+  const _NumberField({
+    required this.value,
+    required this.min,
+    required this.max,
+    required this.decimals,
+    required this.onChanged,
+  });
 
-  final int color;
-  final double size;
+  final double value;
+  final double min;
+  final double max;
+  final int decimals;
+  final ValueChanged<double> onChanged;
+
+  @override
+  State<_NumberField> createState() => _NumberFieldState();
+}
+
+class _NumberFieldState extends State<_NumberField> {
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.value.toStringAsFixed(widget.decimals),
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: EasyRadialGradient(
-          colorStops: [
-            RadialStop.start(color: Color(color)),
-            RadialStop.at(0.6, color: Color(color)),
-            RadialStop.end(color: Color(color), opacity: 0.0),
-          ],
+    return SizedBox(
+      width: widget.decimals == 0 ? 34 : 48,
+      child: TextField(
+        controller: _controller,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        textAlign: TextAlign.center,
+        cursorColor: const Color(0xFFFFD479),
+        style: const TextStyle(
+          fontFamily: 'monospace',
+          fontSize: 14,
+          fontWeight: FontWeight.w700,
+          color: Color(0xFFFFD479),
         ),
+        decoration: const InputDecoration(
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(vertical: 2),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Color(0x55FFD479)),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFFFFD479)),
+          ),
+        ),
+        onChanged: (text) {
+          final parsed = double.tryParse(text);
+          if (parsed == null) return;
+          widget.onChanged(parsed.clamp(widget.min, widget.max));
+        },
       ),
     );
   }

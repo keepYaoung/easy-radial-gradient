@@ -4,24 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('playground pumps and reacts to controls', (tester) async {
+  testWidgets('live editor pumps and reacts to edited numbers', (tester) async {
     await tester.pumpWidget(const ExampleApp());
     await tester.pumpAndSettle();
 
-    // Preview is present (Frost preset shows backdrop blur by default).
+    // A single radial-gradient circle preview is shown.
     expect(find.byType(RadialGradientBox), findsOneWidget);
-    expect(find.byType(BackdropFilter), findsOneWidget);
 
-    // Drag the first slider (blur) and make sure nothing throws.
-    await tester.drag(find.byType(Slider).first, const Offset(60, 0));
-    await tester.pumpAndSettle();
+    // The editable numeric literals are present.
+    expect(find.byType(TextField), findsWidgets);
 
-    // Switch to a colorful preset.
-    await tester.tap(find.text('Sunset'));
-    await tester.pumpAndSettle();
-
-    // Toggle to the circle shape; the corner slider disappears.
-    await tester.tap(find.text('Circle'));
+    // Editing a number (e.g. radius) updates state without throwing.
+    await tester.enterText(find.byType(TextField).first, '0.9');
     await tester.pumpAndSettle();
 
     expect(find.byType(RadialGradientBox), findsOneWidget);
