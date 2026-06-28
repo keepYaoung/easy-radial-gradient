@@ -1,8 +1,13 @@
 ## 1.0.3
 
+* Rewrite the example into an interactive playground: live sliders for `blur`,
+  `backdropBlur`, `radius`, and corner radius, a circle/rounded shape toggle,
+  and color presets (Sunset / Ocean / Frost) — all rendered over colored blobs
+  so the backdrop blur is visible.
 * Add `AGENTS.md` (guidance for AI coding agents) and `CONTRIBUTING.md`
-  (contributor guide), plus a short "Support" section in the README. No code
-  changes.
+  (contributor guide), plus a short "Support" section in the README.
+
+No changes to the public library API.
 
 ## 1.0.2
 
