@@ -70,7 +70,7 @@ class _LiveEditorPageState extends State<LiveEditorPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(child: preview),
-                  SizedBox(width: 420, child: _editorPanel()),
+                  Expanded(child: _editorPanel()),
                 ],
               );
             }
