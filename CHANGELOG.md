@@ -1,3 +1,8 @@
+## 1.0.5
+
+* Add README badges: version, monthly downloads, pub points, platform, and
+  license. No code changes.
+
 ## 1.0.4
 
 * Add a live, in-browser demo (GitHub Pages) linked from the top of the README,
