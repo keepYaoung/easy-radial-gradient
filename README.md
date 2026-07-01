@@ -5,7 +5,6 @@ Design-tool-style radial gradients for Flutter.
 [![pub package](https://img.shields.io/pub/v/easy_radial_gradient.svg)](https://pub.dev/packages/easy_radial_gradient)
 [![downloads](https://img.shields.io/pub/dm/easy_radial_gradient)](https://pub.dev/packages/easy_radial_gradient)
 [![pub points](https://img.shields.io/pub/points/easy_radial_gradient)](https://pub.dev/packages/easy_radial_gradient/score)
-[![likes](https://img.shields.io/pub/likes/easy_radial_gradient)](https://pub.dev/packages/easy_radial_gradient/score)
 [![platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Web%20%7C%20Windows%20%7C%20macOS%20%7C%20Linux-blue)](https://pub.dev/packages/easy_radial_gradient)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Live demo](https://img.shields.io/badge/%E2%96%B6-Live%20demo-FF4D8D)](https://keepyaoung.github.io/easy-radial-gradient/)
